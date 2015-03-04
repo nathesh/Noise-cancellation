@@ -2,4 +2,6 @@
 ./Example/*.o 
 ./Example/*.out
 ./code/*.o
-.code/*.out 
+.code/*.out
+*.md.swp
+*.md.swo
