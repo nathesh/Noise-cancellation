@@ -1,4 +1,3 @@
-*.swp 
 ./Example/*.o 
 ./Example/*.out
 ./code/*.o
