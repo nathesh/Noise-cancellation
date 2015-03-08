@@ -45,7 +45,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "include/portaudio.h"
+#include "portaudio.h"
 
 /* #define SAMPLE_RATE  (17932) // Test failure to open with this value. */
 #define SAMPLE_RATE  (44100)
@@ -97,7 +97,7 @@ int main(void)
     printf("patest_read_record.c\n"); fflush(stdout);
 
     totalFrames = NUM_SECONDS * SAMPLE_RATE; /* Record for a few seconds. */
-    numSamples = totalFrames * NUM_CHANNELS;
+    numSamples = totalFrames * NUM_CHANNELS; 
 
     numBytes = numSamples * sizeof(SAMPLE);
     recordedSamples = (SAMPLE *) malloc( numBytes );
@@ -137,7 +137,7 @@ int main(void)
     if( err != paNoError ) goto error;
     printf("Now recording!!\n"); fflush(stdout);
 
-    err = Pa_ReadStream( stream, recordedSamples, totalFrames );
+    err = Pa_ReadStream ( stream, recordedSamples, totalFrames );
     if( err != paNoError ) goto error;
     
     err = Pa_CloseStream( stream );
@@ -146,8 +146,12 @@ int main(void)
     /* Measure maximum peak amplitude. */
     max = 0;
     average = 0;
+
     for( i=0; i<numSamples; i++ )
     {
+        if(i%1000 == 0) {
+          printf("Sample = "PRINTF_S_FORMAT"\n", recordedSamples[i]);
+        } 
         val = recordedSamples[i];
         if( val < 0 ) val = -val; /* ABS */
         if( val > max )
@@ -155,10 +159,11 @@ int main(void)
             max = val;
         }
         average += val;
+
     }
 
     average = average / numSamples;
-
+    printf("Number of Samples= %d\n", numSamples);
     printf("Sample max amplitude = "PRINTF_S_FORMAT"\n", max );
     printf("Sample average = "PRINTF_S_FORMAT"\n", average );
 /*  Was as below. Better choose at compile time because this
