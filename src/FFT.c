@@ -1,43 +1,28 @@
-#include <math.h>
-
-#include <fftw3.h>
-#define N 128 
+#include "../include/FFT.h"
+ 
 #define REAL 0
 #define IMAG 1
 
-void inputsignal(fftw_complex* signal) {
+void inputsignal(fftw_complex* signal,SAMPLE* Record) {
 	int i; 
-	for (i = 0; i < N; ++i) {
-        double theta = (double)i / (double)N * M_PI;
+	for (i = 0; i < NUM_SAMPLES; ++i) {
+        
+        signal[i][REAL] = Record[i];
 
-        signal[i][REAL] = 1.0 * cos(10.0 * theta) +
-                          0.5 * cos(25.0 * theta);
-
-        signal[i][IMAG] = 1.0 * sin(10.0 * theta) +
-                          0.5 * sin(25.0 * theta);
-    }
-
-}
-void output(fftw_complex* signal) {
-	int i;
-    for (i = 0; i < N; ++i) {
-        double mag = sqrt(signal[i][REAL] * signal[i][REAL] +
-                          signal[i][IMAG] * signal[i][IMAG]);
-
-        printf("%g\n", mag);
+        signal[i][IMAG] = 0;
     }
 
 }
 
-int main() {
+fftw_complex* input(SAMPLE* Record) {
 	fftw_complex *in, *out;
 	fftw_plan p;
-	in = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * N);
-	out = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * N);
-	p = fftw_plan_dft_1d(N, in, out, FFTW_FORWARD, FFTW_ESTIMATE);
-	inputsignal(in); 
+	in = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * NUM_SAMPLES);
+	out = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * NUM_SAMPLES);
+	p = fftw_plan_dft_1d(NUM_SAMPLES, in, out, FFTW_FORWARD, FFTW_ESTIMATE);
+	inputsignal(in,Record); 
 	fftw_execute(p); /* repeat as needed */
-	output(out); 
+	return out;
 	fftw_destroy_plan(p);
 	fftw_free(in); fftw_free(out);
 	return 0; 

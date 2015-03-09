@@ -45,7 +45,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "portaudio.h"
+#include "../include/portaudio.h"
+
 
 /* #define SAMPLE_RATE  (17932) // Test failure to open with this value. */
 #define SAMPLE_RATE  (44100)
@@ -80,8 +81,7 @@ typedef unsigned char SAMPLE;
 
 
 /*******************************************************************/
-int main(void);
-int main(void)
+SAMPLE* Record(void)
 {
     PaStreamParameters inputParameters, outputParameters;
     PaStream *stream;
@@ -144,28 +144,14 @@ int main(void)
     if( err != paNoError ) goto error;
 
     /* Measure maximum peak amplitude. */
-    max = 0;
-    average = 0;
 
-    for( i=0; i<numSamples; i++ )
-    {
-        if(i%1000 == 0) {
-          printf("Sample = "PRINTF_S_FORMAT"\n", recordedSamples[i]);
-        } 
-        val = recordedSamples[i];
-        if( val < 0 ) val = -val; /* ABS */
-        if( val > max )
-        {
-            max = val;
-        }
-        average += val;
-
-    }
-
+    return recordedSamples;
     average = average / numSamples;
+    /*
     printf("Number of Samples= %d\n", numSamples);
-    printf("Sample max amplitude = "PRINTF_S_FORMAT"\n", max );
-    printf("Sample average = "PRINTF_S_FORMAT"\n", average );
+    printf("Sample max amplitude = "PRINTF_S_FORMAT"\n", max);
+    printf("Sample average = "PRINTF_S_FORMAT"\n", average);
+/**
 /*  Was as below. Better choose at compile time because this
     keeps generating compiler-warnings:
     if( PA_SAMPLE_TYPE == paFloat32 )
@@ -244,5 +230,5 @@ error:
     fprintf( stderr, "An error occured while using the portaudio stream\n" );
     fprintf( stderr, "Error number: %d\n", err );
     fprintf( stderr, "Error message: %s\n", Pa_GetErrorText( err ) );
-    return -1;
+    
 }
