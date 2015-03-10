@@ -12,7 +12,7 @@ int main()
         double mag = sqrt(signal[i][REAL] * signal[i][REAL] +
                           signal[i][IMAG] * signal[i][IMAG]);
 
-       // printf("%d\n", i);
+       printf("%d\n", i);
     }
 
         printf("%d\n", i);

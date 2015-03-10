@@ -4,12 +4,12 @@
 #define IMAG 1
 
 void inputsignal(fftw_complex* signal,SAMPLE* Record) {
-	int i; 
-	for (i = 0; i < NUM_SAMPLES; ++i) {
+	int k; 
+	for (k = 0; k < FRAMES_PER_BUFFER; ++k) {
         
-        signal[i][REAL] = Record[i];
+        signal[k][REAL] = Record[k];
 
-        signal[i][IMAG] = 0;
+        signal[k][IMAG] = 0;
     }
 
 }
@@ -17,9 +17,9 @@ void inputsignal(fftw_complex* signal,SAMPLE* Record) {
 fftw_complex* input(SAMPLE* Record) {
 	fftw_complex *in, *out;
 	fftw_plan p;
-	in = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * NUM_SAMPLES);
-	out = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * NUM_SAMPLES);
-	p = fftw_plan_dft_1d(NUM_SAMPLES, in, out, FFTW_FORWARD, FFTW_ESTIMATE);
+	in = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * FRAMES_PER_BUFFER);
+	out = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * FRAMES_PER_BUFFER);
+	p = fftw_plan_dft_1d(FRAMES_PER_BUFFER, in, out, FFTW_FORWARD, FFTW_ESTIMATE);
 	inputsignal(in,Record); 
 	fftw_execute(p); /* repeat as needed */
 	return out;

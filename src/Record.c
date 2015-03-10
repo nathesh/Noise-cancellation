@@ -43,18 +43,18 @@
  * license above.
  */
 
-#include <stdio.h>
-#include <stdlib.h>
+
 #include "../include/portaudio.h"
-
-
+#include "../include/FFT.h"
+#include "../include/Record.h"
+typedef int PaStreamCallback( const void *input,
+                                      void *output,
+                                      unsigned long frameCount,
+                                      const PaStreamCallbackTimeInfo* timeInfo,
+                                      PaStreamCallbackFlags statusFlags,
+                                      void *userData ) ;
 /* #define SAMPLE_RATE  (17932) // Test failure to open with this value. */
-#define SAMPLE_RATE  (44100)
-#define FRAMES_PER_BUFFER (1024)
-#define NUM_SECONDS     (5)
-#define NUM_CHANNELS    (2)
-/* #define DITHER_FLAG     (paDitherOff)  */
-#define DITHER_FLAG     (0) /**/
+
 
 /* Select sample format. */
 #if 1
@@ -79,7 +79,18 @@ typedef unsigned char SAMPLE;
 #define PRINTF_S_FORMAT "%d"
 #endif
 
-
+static int patestCallback( const void *inputBuffer, void *outputBuffer,
+                           unsigned long framesPerBuffer,
+                           const PaStreamCallbackTimeInfo* timeInfo,
+                           PaStreamCallbackFlags statusFlags,
+                           void *userData ) 
+  { 
+   
+    SAMPLE* data = (SAMPLE*) inputBuffer; 
+    fftw_complex* signal = input(data);
+    
+   return 0;
+  }
 /*******************************************************************/
 SAMPLE* Record(void)
 {
@@ -129,21 +140,27 @@ SAMPLE* Record(void)
               SAMPLE_RATE,
               FRAMES_PER_BUFFER,
               paClipOff,      /* we won't output out of range samples so don't bother clipping them */
-              NULL, /* no callback, use blocking API */
-              NULL ); /* no callback, so no callback userData */
+              patestCallback, /* no callback, use blocking API */
+              &recordedSamples ); /* no callback, so no callback userData */
     if( err != paNoError ) goto error;
 
     err = Pa_StartStream( stream );
     if( err != paNoError ) goto error;
     printf("Now recording!!\n"); fflush(stdout);
 
-    err = Pa_ReadStream ( stream, recordedSamples, totalFrames );
-    if( err != paNoError ) goto error;
+   while( ( err = Pa_IsStreamActive( stream ) ) == 1 ){
+    //printf("Now I am active!!\n");
     
+
+    //if( err != paNoError ) goto error;
+   }
+    
+    
+    
+    /* Measure maximum peak amplitude. */
+   
     err = Pa_CloseStream( stream );
     if( err != paNoError ) goto error;
-
-    /* Measure maximum peak amplitude. */
 
     return recordedSamples;
     average = average / numSamples;
