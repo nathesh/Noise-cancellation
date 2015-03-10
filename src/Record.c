@@ -47,6 +47,8 @@
 #include "../include/portaudio.h"
 #include "../include/FFT.h"
 #include "../include/Record.h"
+#include "../include/Weighting.h"
+
 typedef int PaStreamCallback( const void *input,
                                       void *output,
                                       unsigned long frameCount,
@@ -88,8 +90,8 @@ static int patestCallback( const void *inputBuffer, void *outputBuffer,
    
     SAMPLE* data = (SAMPLE*) inputBuffer; 
     fftw_complex* signal = input(data);
-    
-   return 0;
+    float* bands = A_weighted(signal); 
+    return 0;
   }
 /*******************************************************************/
 SAMPLE* Record(void)

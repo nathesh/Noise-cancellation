@@ -23,8 +23,9 @@ fftw_complex* input(SAMPLE* Record) {
 	inputsignal(in,Record); 
 	fftw_execute(p); /* repeat as needed */
 	return out;
-	fftw_destroy_plan(p);
-	fftw_free(in); fftw_free(out);
-	return 0; 
+//	DUDE WE NEED TO FIX THIS>>>
+//	fftw_destroy_plan(p);
+//	fftw_free(in); fftw_free(out);
+//	return 0; 
 }
 

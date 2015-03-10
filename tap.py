@@ -99,7 +99,7 @@ class TapTester(object):
         except IOError, e:
             # dammit. 
             self.errorcount += 1
-            print( "(%d) Error recording: %s"%(self.errorcount,e) )
+            print( "(%d) Error playing: %s"%(self.errorcount,e) )
             self.noisycount = 1
             return
         self.stream.write(block);

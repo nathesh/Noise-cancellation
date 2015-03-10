@@ -1,5 +1,4 @@
 typedef float SAMPLE;
-
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
