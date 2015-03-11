@@ -100,7 +100,7 @@ static int patestCallback( const void *inputBuffer, void *outputBuffer,
 //this is testing at like 50 hz off???
          mag= (float)sqrt(signal[i][REAL]*signal[i][REAL]
                      + signal[i][IMAG]*signal[i][IMAG]);
-						printf("%3d %12f dB\n",i*F_RES,20*log10(mag));
+//						printf("%3d %12f dB\n",i*F_RES,20*log10(mag));
 }
 		
   float* bands = A_weighted(signal); 

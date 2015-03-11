@@ -39,6 +39,9 @@ float* A_compute_coeff() {
 		bands[i] = 0;
 }
   //do this better where A is a global variable
+	int max[2];
+max[0] = 0;
+max[1] = 0;
 	float* A = A_compute_coeff();
 	for (i = 0; i < FRAMES_PER_BUFFER; i++) {
        mag = (float) sqrt(fftdata[i][REAL]*fftdata[i][REAL]+
@@ -51,7 +54,12 @@ float* A_compute_coeff() {
          //  printf("freq: %d  bin:%d mag:%4.1f dB \n",i*F_RES,(int)floor(i*F_RES*NUM_BINS*2/SAMPLE_RATE),mag);
 				   bands[(int)floor(i*F_RES*NUM_BINS*2/SAMPLE_RATE)] += mag;
 				   sum += bands[(int)floor(i*F_RES*NUM_BINS*2/SAMPLE_RATE)];
+					if (max[0]<mag){
+						  max[0] = mag;
+							max[1] = i;
+}
 				}
+				printf("freq:%d %d \n",max[1]*F_RES,max[0]);
 }
 //	printf("%4.1f",sum);
 	for (i = 0; i < NUM_BINS; i++) {
