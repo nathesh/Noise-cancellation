@@ -14,6 +14,7 @@
 #define Y4 12194.217*12194.217
 #define FRAMES_PER_BUFFER 1024
 
+
 //A weight before or after seperation into bins
 float* A_compute_coeff() {
 	int i;
@@ -23,7 +24,8 @@ float* A_compute_coeff() {
        freq = i * F_RES;
        A[i] = ((X *pow(freq,8))/ 
               ((Y1 + pow(freq,2)) * (Y2 + pow(freq,2)) * (Y3 + pow(freq,2)) * (Y4 + pow(freq,2))));
-	}
+			 printf("freq:%3d  %12f \n",i*F_RES,A[i]);
+		}
 	return A;
 }
 

@@ -48,7 +48,7 @@
 #include "../include/FFT.h"
 #include "../include/Record.h"
 #include "../include/Weighting.h"
-
+#include <math.h>
 typedef int PaStreamCallback( const void *input,
                                       void *output,
                                       unsigned long frameCount,
@@ -80,7 +80,11 @@ typedef unsigned char SAMPLE;
 #define SAMPLE_SILENCE  (128)
 #define PRINTF_S_FORMAT "%d"
 #endif
-
+#define REAL (0)
+#define IMAG (1)
+#define FRAMES_PER_BUFFER (1024)
+#define SAMPLE_RATE 8000
+#define F_RES SAMPLE_RATE/(2*FRAMES_PER_BUFFER)
 static int patestCallback( const void *inputBuffer, void *outputBuffer,
                            unsigned long framesPerBuffer,
                            const PaStreamCallbackTimeInfo* timeInfo,
@@ -90,7 +94,16 @@ static int patestCallback( const void *inputBuffer, void *outputBuffer,
    
     SAMPLE* data = (SAMPLE*) inputBuffer; 
     fftw_complex* signal = input(data);
-    float* bands = A_weighted(signal); 
+    int i;
+		float mag;
+		for (i=0; i < FRAMES_PER_BUFFER; i++){
+//this is testing at like 50 hz off???
+         mag= (float)sqrt(signal[i][REAL]*signal[i][REAL]
+                     + signal[i][IMAG]*signal[i][IMAG]);
+//						printf("%3d %12f dB\n",i*F_RES,10*log10(mag));
+}
+		
+//  float* bands = A_weighted(signal); 
     return 0;
   }
 /*******************************************************************/
@@ -128,7 +141,7 @@ SAMPLE* Record(void)
     if (inputParameters.device == paNoDevice) {
       fprintf(stderr,"Error: No default input device.\n");
       goto error;
-    }
+   }
     inputParameters.channelCount = NUM_CHANNELS;
     inputParameters.sampleFormat = PA_SAMPLE_TYPE;
     inputParameters.suggestedLatency = Pa_GetDeviceInfo( inputParameters.device )->defaultLowInputLatency;
