@@ -59,32 +59,8 @@ typedef int PaStreamCallback( const void *input,
 
 
 /* Select sample format. */
-#if 1
-#define PA_SAMPLE_TYPE  paFloat32
-typedef float SAMPLE;
-#define SAMPLE_SILENCE  (0.0f)
-#define PRINTF_S_FORMAT "%.8f"
-#elif 1
-#define PA_SAMPLE_TYPE  paInt16
-typedef short SAMPLE;
-#define SAMPLE_SILENCE  (0)
-#define PRINTF_S_FORMAT "%d"
-#elif 0
-#define PA_SAMPLE_TYPE  paInt8
-typedef char SAMPLE;
-#define SAMPLE_SILENCE  (0)
-#define PRINTF_S_FORMAT "%d"
-#else
-#define PA_SAMPLE_TYPE  paUInt8
-typedef unsigned char SAMPLE;
-#define SAMPLE_SILENCE  (128)
-#define PRINTF_S_FORMAT "%d"
-#endif
-#define REAL (0)
-#define IMAG (1)
-#define FRAMES_PER_BUFFER (1024)
-#define SAMPLE_RATE 8000
-#define F_RES SAMPLE_RATE/(2*FRAMES_PER_BUFFER)
+
+
 static int patestCallback( const void *inputBuffer, void *outputBuffer,
                            unsigned long framesPerBuffer,
                            const PaStreamCallbackTimeInfo* timeInfo,
@@ -98,7 +74,7 @@ static int patestCallback( const void *inputBuffer, void *outputBuffer,
 		float mag;
 		for (i=0; i < FRAMES_PER_BUFFER; i++){
 //this is testing at like 50 hz off???
-         mag= (float)sqrt(signal[i][REAL]*signal[i][REAL]
+         mag = (float)sqrt(signal[i][REAL]*signal[i][REAL]
                      + signal[i][IMAG]*signal[i][IMAG]);
 //						printf("%3d %12f dB\n",i*F_RES,20*log10(mag));
 }

@@ -1,8 +1,4 @@
 #include "../include/FFT.h"
- 
-#define REAL 0
-#define IMAG 1
-
 void inputsignal(fftw_complex* signal,SAMPLE* Record) {
 	int k; 
 	for (k = 0; k < FRAMES_PER_BUFFER; ++k) {

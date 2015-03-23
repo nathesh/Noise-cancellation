@@ -7,6 +7,8 @@ typedef float SAMPLE;
 #define SAMPLE_RATE  (8000) 
 #define NUM_SECONDS     (5)
 #define NUM_CHANNELS    (2)
+#define PA_SAMPLE_TYPE  paFloat32
+#define SAMPLE_SILENCE  (0.0f)
 /* #define DITHER_FLAG     (paDitherOff)  */
 #define DITHER_FLAG     (0) /**/
 SAMPLE* Record(void); 

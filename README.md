@@ -1,4 +1,8 @@
-Noise-cancellation-
+Noise-cancellation
 ===================
-thejas is trying to vim at a very slow rate hehe :)
-Senior Design 
+
+Needed libraries: 
+ - portaudio
+ - FFTW 
+To run and compile the code:
+gcc main.c FFT.c Record.c Weighting.c -lfftw3 -lm -lrt -lasound -pthread -lportaudio -o ../output/output && ../output/output
