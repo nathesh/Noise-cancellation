@@ -1,7 +1,7 @@
 #include "../include/FFT.h"
 void inputsignal(fftw_complex* signal,SAMPLE* Record) {
 	int k; 
-	for (k = 0; k < FRAMES_PER_BUFFER; ++k) {
+	for (k = 0; k < FRAMES_PER_BUFFER/2; ++k) {
         
         signal[k][REAL] = Record[k];
 

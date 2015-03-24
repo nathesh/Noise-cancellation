@@ -11,7 +11,7 @@ float* A_compute_coeff() {
 	int i;
 	int freq;
 	float* A = malloc(sizeof(float) * SAMPLE_RATE/(2*F_RES));
-  for (i=0; i < FRAMES_PER_BUFFER; i++) {
+  for (i=0; i < FRAMES_PER_BUFFER/2; i++) {
        freq = i * F_RES;
        A[i] = 20*log10(((Y4 *pow(freq,4))/ 
               ((Y1 + pow(freq,2)) * sqrt(Y2 + pow(freq,2)) * sqrt(Y3 + pow(freq,2)) * (Y4 + pow(freq,2)))))+2;
@@ -35,7 +35,7 @@ float* A_compute_coeff() {
 max[0] = 0;
 max[1] = 0;
 	float* A = A_compute_coeff();
-	for (i = 0; i < FRAMES_PER_BUFFER; i++) {
+	for (i = 0; i < FRAMES_PER_BUFFER/2; i++) {
        mag = (float) sqrt(fftdata[i][REAL]*fftdata[i][REAL]+
                     fftdata[i][IMAG]*fftdata[i][IMAG]);
        mag = 20*log10(mag);
@@ -51,7 +51,7 @@ max[1] = 0;
 							max[1] = i;
 }
 				}
-				printf("freq:%d %d \n",max[1]*F_RES,max[0]);
+				printf("freq:%d %d \n",2*max[1]*F_RES,max[0]);
 }
 //	printf("%4.1f",sum);
 	for (i = 0; i < NUM_BINS; i++) {
