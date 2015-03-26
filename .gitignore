@@ -5,3 +5,4 @@
 *.md.swp
 *.md.swo
 ./data/Ideal_Noise/wav_files/*.wav
+./output/*
