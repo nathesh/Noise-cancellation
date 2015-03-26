@@ -34,8 +34,9 @@ float* A_compute_coeff() {
 	int max[2];
 max[0] = 0;
 max[1] = 0;
-	float* A = A_compute_coeff();
-	for (i = 0; i < FRAMES_PER_BUFFER/2; i++) {
+int index = (int) floor(FRAMES_PER_BUFFER/(2*NUM_BINS));
+float* A = A_compute_coeff();
+for (i = 0; i < FRAMES_PER_BUFFER/2; i++) {
        mag = (float) sqrt(fftdata[i][REAL]*fftdata[i][REAL]+
                     fftdata[i][IMAG]*fftdata[i][IMAG]);
        mag = 20*log10(mag);
@@ -44,19 +45,21 @@ max[1] = 0;
       //is there a better way to check if btw - and infinity
 			  if((-10000 < mag)&&(mag < 10000)){
          //  printf("freq: %d  bin:%d mag:%4.1f dB \n",i*F_RES,(int)floor(i*F_RES*NUM_BINS*2/SAMPLE_RATE),mag);
-				   bands[(int)floor(i*F_RES*NUM_BINS*2/SAMPLE_RATE)] += mag;
+				   bands[(int)floor(i/index)] += mag;
+				   //printf("%d\n",(int)floor(i/index));
+				  // printf("freq:%d %d \n",2*i*F_RES,mag);
 				   sum += bands[(int)floor(i*F_RES*NUM_BINS*2/SAMPLE_RATE)];
 					if (max[0]<mag){
 						  max[0] = mag;
 							max[1] = i;
 }
 				}
-				printf("freq:%d %d \n",2*max[1]*F_RES,max[0]);
+				//printf("freq:%d %d \n",2*max[1]*F_RES,max[0]);
 }
 //	printf("%4.1f",sum);
 	for (i = 0; i < NUM_BINS; i++) {
-	     bands[i] /= FRAMES_PER_BUFFER/NUM_BINS;
-	    // printf("BAND:%d %4.1f dB \n",i,bands[i]);
+	    bands[i] /= FRAMES_PER_BUFFER/NUM_BINS;
+	    //printf("BAND:%d %4.1f dB \n",i,bands[i]);
 	}
 	return bands;
 }

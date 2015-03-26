@@ -1,5 +1,4 @@
 #include <fftw3.h>
-
 #include "../include/Record.h"
 #define REAL (0)
 #define IMAG (1)

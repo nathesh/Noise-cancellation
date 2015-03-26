@@ -1,3 +1,4 @@
+
 typedef float SAMPLE;
 #include <unistd.h>
 #include <stdio.h>
@@ -11,4 +12,6 @@ typedef float SAMPLE;
 #define SAMPLE_SILENCE  (0.0f)
 /* #define DITHER_FLAG     (paDitherOff)  */
 #define DITHER_FLAG     (0) /**/
+float* output_files;
+float* output_sound;
 SAMPLE* Record(void); 
