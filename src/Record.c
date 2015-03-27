@@ -101,7 +101,7 @@ SAMPLE* Record(void)
     if( err != paNoError ) goto error;
     printf("Now recording!!\n"); fflush(stdout);
 
-   while(sleep(5))
+   while(sleep(1))
    {
     //printf("Now I am active!!\n");
     err = Pa_IsStreamActive( stream ) ;
@@ -156,46 +156,6 @@ SAMPLE* Record(void)
 
     /* Playback recorded data.  -------------------------------------------- */
     
-    outputParameters.device = Pa_GetDefaultOutputDevice(); /* default output device */
-    if (outputParameters.device == paNoDevice) {
-      fprintf(stderr,"Error: No default output device.\n");
-      goto error;
-     }
-      outputParameters.channelCount = NUM_CHANNELS;
-      outputParameters.sampleFormat =  PA_SAMPLE_TYPE;
-      outputParameters.suggestedLatency = Pa_GetDeviceInfo( outputParameters.device )->defaultLowOutputLatency;
-      outputParameters.hostApiSpecificStreamInfo = NULL;
-
-      printf("Begin playback.\n"); fflush(stdout);
-      err = Pa_OpenStream(
-              &stream,
-              NULL, /* no input */
-              &outputParameters,
-              SAMPLE_RATE,
-              FRAMES_PER_BUFFER,
-              paClipOff,      /* we won't output out of range samples so don't bother clipping them */
-              NULL, /* no callback, use blocking API */
-              NULL ); /* no callback, so no callback userData */
-    if( err != paNoError ) goto error;
-
-    if( stream )
-    {
-        err = Pa_StartStream( stream );
-        if( err != paNoError ) goto error;
-        printf("Waiting for playback to finish.\n"); fflush(stdout);
-
-        err = Pa_WriteStream( stream, recordedSamples, totalFrames );
-        if( err != paNoError ) goto error;
-
-      err = Pa_CloseStream( stream );
-       if( err != paNoError ) goto error;
-        printf("Done.\n"); fflush(stdout);
-    }
-    free(recordedSamples);
-    free(output_files);
-    free(output_sound);
-    Pa_Terminate();
-    return 0;
 
 error:
 

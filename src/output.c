@@ -14,7 +14,7 @@ static int outputcallback(const void *input,
                             void *userData ) 
 { 
    
-  printf("%s\n","Here I am!");
+  //printf("%s\n","Here I am!");
 //						printf("%3d %12f dB\n",i*F_RES,20*log10(mag));
   }
 void output(float* bands) {
@@ -65,6 +65,9 @@ void output_audio(){
 	PaStreamParameters outputParameters;
 	PaStream *stream;
 	PaError err;
+	err = Pa_Initialize();
+	if(err != paNoError) 
+		goto error;
 	outputParameters.device = Pa_GetDefaultOutputDevice(); /* default output device */
     if (outputParameters.device == paNoDevice) {
     	fprintf(stderr,"Error: No default output device.\n");

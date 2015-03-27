@@ -34,7 +34,7 @@ float* output_file()
 
             strcpy(buff,path_name);
             strcat(buff,about->d_name);
-            printf("\n%d%s\n",one,buff);
+            //printf("\n%d%s\n",one,buff);
             sf = sf_open(buff,SFM_READ,&info);
         if (sf == NULL){
 
@@ -51,7 +51,7 @@ float* output_file()
         //printf("samplerate=%d\n",sr);
         //printf("channels=%d\n",c);
         num_items = f*c;
-        printf("num_items=%d\n",num_items);
+        //printf("num_items=%d\n",num_items);
 
         /* Allocate space for the data to be read, then read it. */
         buf = (float *) malloc(num_items*sizeof(float));
