@@ -13,7 +13,7 @@ static int outputcallback(const void *input,
                             PaStreamCallbackFlags statusFlags,
                             void *userData ) 
 { 
-   
+   sleep(120);
   //printf("%s\n","Here I am!");
 //						printf("%3d %12f dB\n",i*F_RES,20*log10(mag));
   }
@@ -55,7 +55,7 @@ void output(float* bands) {
 		}
 		for(x=0;x<LENGTH;x++) {
 			output_files[LENGTH*y+x] *= bands[mul];
-			output_sound[x] += output_files[LENGTH*y+x]; 
+			output_sound[x] += output_files[LENGTH*y+x]/10; 
 		}
 		output_audio();
 	//printf("%s\n","DONE!");
@@ -95,13 +95,16 @@ void output_audio(){
         err = Pa_StartStream( stream );
         if( err != paNoError ) goto error;
         printf("Waiting for playback to finish.\n"); fflush(stdout);
-
-       while(sleep(1))
+       	//err = Pa_WriteStream(stream, output_sound, LENGTH);
+  		//if( err != paNoError ) goto error;
+  		/*
+       	while(sleep(1))
    			{
 			    //printf("Now I am active!!\n");
 			    err = Pa_IsStreamActive( stream ) ;
 			    //if( err != paNoError ) goto error;
 			}
+		*/
 		err = Pa_StopStream( stream );
   		if( err != paNoError ) goto error;
       	err = Pa_CloseStream( stream );
