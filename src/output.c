@@ -96,14 +96,14 @@ void output_audio(){
         if( err != paNoError ) goto error;
         printf("Waiting for playback to finish.\n"); fflush(stdout);
 
-        err = Pa_WriteStream(stream, output_sound,LENGTH);
-        if( err != paNoError ) goto error;
-         while(sleep(5))
+       while(sleep(1))
    			{
 			    //printf("Now I am active!!\n");
 			    err = Pa_IsStreamActive( stream ) ;
 			    //if( err != paNoError ) goto error;
 			}
+		err = Pa_StopStream( stream );
+  		if( err != paNoError ) goto error;
       	err = Pa_CloseStream( stream );
        	if( err != paNoError ) goto error;
         	printf("Done.\n"); fflush(stdout);

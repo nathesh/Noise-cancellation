@@ -107,8 +107,8 @@ SAMPLE* Record(void)
     err = Pa_IsStreamActive( stream ) ;
     //if( err != paNoError ) goto error;
    }
-    
-
+  err = Pa_StopStream( stream );
+  if( err != paNoError ) goto error;
     
     
     /* Measure maximum peak amplitude. */
