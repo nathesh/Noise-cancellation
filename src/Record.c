@@ -5,7 +5,7 @@
 #include "../include/output_files.h"
 #include "../include/output.h"
 #include <math.h>
-typedef int PaStreamCallback( const void *input,
+typedef int PaStreamCallback(const void *input,
                                       void *output,
                                       unsigned long frameCount,
                                       const PaStreamCallbackTimeInfo* timeInfo,

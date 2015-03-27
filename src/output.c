@@ -1,5 +1,5 @@
 /*
-4,1,10,5,2,9,3,7,6,8
+6,4,1,10,9,3,2,8,7,5
 0,1,2, 3,4,5,6,7,8,9
 */
 #include "../include/output.h"
@@ -24,28 +24,34 @@ void output(float* bands) {
 	{
 		int mul = y;
 		if(y == 0){
+			mul = 6;
+		}
+		else if(y==1){
 			mul = 4;
 		}
 		else if(y==2){
-			mul = 10;
+			mul = 1;
 		}
 		else if(y==3){
-			mul = 5;
+			mul = 10;
 		}
 		else if(y==4){
-			mul = 4;
-		}
-		else if(y==5){
 			mul = 9;
 		}
-		else if(y==6){
+		else if(y==5){
 			mul = 3;
 		}
+		else if(y==6){
+			mul = 2;
+		}
+		else if(y==7){
+			mul = 8;
+		}
 		else if(y==8){
-			mul = 6;
+			mul = 7;
 		}
 		else if(y==9){
-			mul = 8;
+			mul = 5;
 		}
 		for(x=0;x<LENGTH;x++) {
 			output_files[LENGTH*y+x] *= bands[mul];

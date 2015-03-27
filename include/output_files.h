@@ -6,6 +6,6 @@
 #include <sys/stat.h>
 #include <unistd.h> 
 #include <string.h>
-#define LENGTH (16382856)
+#define LENGTH (1638286)
 float* output_file();
 void output_audio();

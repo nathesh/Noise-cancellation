@@ -22,18 +22,19 @@ float* output_file()
     long int length;
     int counter;
     counter = 0;
-    length = 16382856; 
+    length = 1638286; 
+    
     float* all_files;
     all_files = (float *) malloc(length*sizeof(float)*10);
 
 
     while (about = readdir(target)) {
     
-        if((one != 7) && (one !=0) && (one !=11)){
+        if((one != 1) && (one !=6) && (one !=0)){
 
             strcpy(buff,path_name);
             strcat(buff,about->d_name);
-            //printf("\n%s\n",buff);
+            printf("\n%d%s\n",one,buff);
             sf = sf_open(buff,SFM_READ,&info);
         if (sf == NULL){
 
@@ -50,7 +51,7 @@ float* output_file()
         //printf("samplerate=%d\n",sr);
         //printf("channels=%d\n",c);
         num_items = f*c;
-        //printf("num_items=%d\n",num_items);
+        printf("num_items=%d\n",num_items);
 
         /* Allocate space for the data to be read, then read it. */
         buf = (float *) malloc(num_items*sizeof(float));
