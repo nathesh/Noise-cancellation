@@ -20,13 +20,6 @@ static int patestCallback(const void *inputBuffer, void *outputBuffer,
    
   SAMPLE* data = (SAMPLE*) inputBuffer; 
   fftw_complex* signal = input(data);
-  int i;
-  float mag;
-  for (i=0; i < FRAMES_PER_BUFFER; i++){
-    mag = (float)sqrt(signal[i][REAL]*signal[i][REAL]
-          + signal[i][IMAG]*signal[i][IMAG]);
-//						printf("%3d %12f dB\n",i*F_RES,20*log10(mag));
-  }
 	float* bands = A_weighted(signal); 
   int j = 0;
   float sum = 0;
