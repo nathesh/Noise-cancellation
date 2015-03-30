@@ -13,7 +13,7 @@ static int outputcallback(const void *input,
                             PaStreamCallbackFlags statusFlags,
                             void *userData ) 
 { 
-   sleep(120);
+   //sleep(120);
   //printf("%s\n","Here I am!");
 //						printf("%3d %12f dB\n",i*F_RES,20*log10(mag));
   }
@@ -54,7 +54,7 @@ void output(float* bands) {
 			mul = 5;
 		}
 		for(x=0;x<LENGTH;x++) {
-			output_files[LENGTH*y+x] *= bands[mul];
+			output_files[LENGTH*y+x] *= 1;// bands[mul];
 			output_sound[x] += output_files[LENGTH*y+x]/10; 
 		}
 		output_audio();
@@ -83,8 +83,8 @@ void output_audio(){
 						&stream,
 						NULL, /* no input */
 						&outputParameters,
-						SAMPLE_RATE,
-						FRAMES_PER_BUFFER,
+						44100,
+						131072,
 						paClipOff,      /* we won't output out of range samples so don't bother clipping them */
 						outputcallback, /* no callback, use blocking API */
 						&output_sound ); /* no callback, so no callback userData */
@@ -105,6 +105,7 @@ void output_audio(){
 			    //if( err != paNoError ) goto error;
 			}
 		*/
+		//sleep(5);
 		err = Pa_StopStream( stream );
   		if( err != paNoError ) goto error;
       	err = Pa_CloseStream( stream );

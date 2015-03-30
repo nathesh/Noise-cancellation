@@ -10,7 +10,6 @@ float* output_file()
     int i,j;
     FILE *out;
     DIR * target;
-    struct dirent *about;
     struct stat myfile;
     char* path_name; 
     path_name = "../data/Ideal_Noise/wav_files/";
@@ -23,19 +22,27 @@ float* output_file()
     int counter;
     counter = 0;
     length = 1638286; 
-    
+    const char* a[10];
+    struct dirent **namelist;
+    int n;
     float* all_files;
     all_files = (float *) malloc(length*sizeof(float)*10);
 
+    n = scandir(path_name, &namelist, 0, alphasort);
+    if (n < 0)
+    perror("scandir");
+    else {
+        while (n--) {
+            printf("%s\n", namelist[n]->d_name);
+            free(namelist[n]);
+        }
+        free(namelist);
+    }
 
-    while (about = readdir(target)) {
-    
-        if((one != 1) && (one !=6) && (one !=0)){
-
-            strcpy(buff,path_name);
-            strcat(buff,about->d_name);
-            //printf("\n%d%s\n",one,buff);
-            sf = sf_open(buff,SFM_READ,&info);
+        strcpy(buff,path_name);
+        strcat(buff,about->d_name);
+        //printf("\n%s\n",about->d_name);
+        sf = sf_open(buff,SFM_READ,&info);
         if (sf == NULL){
 
             printf("Failed to open the file.\n");
@@ -65,12 +72,11 @@ float* output_file()
             {
                 printf("%s","PRINT SHIT!!!!");
             }
-        }
-        //printf("%ld\n",(long int) counter*length);
-        counter +=1;
-        }
-        one += 1;
-        }
+            
+            //printf("%ld\n",(long int) counter*length);
+            
+        
+ 
     return all_files;
 }
 
