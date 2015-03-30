@@ -1,8 +1,8 @@
-./Example/*.o 
-./Example/*.out
-./code/*.o
-.code/*.out
+*.o 
+*.out
+*.o
+*.out
 *.md.swp
 *.md.swo
-./data/Ideal_Noise/wav_files/*.wav
-./output/*
+output/**
+*.DS_Store
