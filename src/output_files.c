@@ -16,11 +16,11 @@ float* output_file()
     target = opendir("../data/Ideal_Noise/wav_files/");
     /* Open the WAV file. */
     char buff[128];
-    int one;
-    one = 0;
     long int length;
     int counter;
     counter = 0;
+    int files_counter;
+    files_counter = 0;
     length = 1638286; 
     const char* a[10];
     struct dirent **namelist;
@@ -28,50 +28,60 @@ float* output_file()
     float* all_files;
     all_files = (float *) malloc(length*sizeof(float)*10);
 
-    n = scandir(path_name, &namelist, 0, alphasort);
+    n = scandir(path_name, &namelist, 0, versionsort);
     if (n < 0)
     perror("scandir");
     else {
-        while (n--) {
-            printf("%s\n", namelist[n]->d_name);
-            free(namelist[n]);
+        while (files_counter<n-1) 
+        {
+            if(strcmp(namelist[files_counter]->d_name,".") != 0 && strcmp(namelist[files_counter]->d_name,"..") )
+            {
+                printf("%d, %s\n",files_counter,namelist[files_counter]->d_name);
+                strcpy(buff,path_name);
+                strcat(buff,namelist[files_counter]->d_name);
+                sf = sf_open(buff,SFM_READ,&info);
+                if (sf == NULL){
+                    printf("Failed to open the file.\n");
+                    exit(-1);
+                }
+                f = info.frames;
+                sr = info.samplerate;
+                c = info.channels;
+                //printf("frames=%d\n",f);
+                //printf("samplerate=%d\n",sr);
+                //printf("channels=%d\n",c);
+                num_items = f*c;
+                //printf("num_items=%d\n",num_items);
+
+                /* Allocate space for the data to be read, then read it. */
+                buf = (float *) malloc(num_items*sizeof(float));
+                num = sf_read_float(sf,buf,num_items);
+                sf_close(sf);
+                int x;
+                for(x = 0; x<length;x++) {
+                    all_files[counter*length+x] = buf[x];
+                    if(x<0)
+                    {
+                        printf("%s","PRINT SHIT!!!!");
+                    }
+                }
+                counter +=1;
+            }
+        free(namelist[files_counter]);
+        //printf("%s\n","PRINT SHIT!!!!");
+        files_counter +=1;
         }
         free(namelist);
     }
 
-        strcpy(buff,path_name);
-        strcat(buff,about->d_name);
+        
         //printf("\n%s\n",about->d_name);
-        sf = sf_open(buff,SFM_READ,&info);
-        if (sf == NULL){
-
-            printf("Failed to open the file.\n");
-            exit(-1);
-        }
-
+        
         /* Print some of the info, and figure out how much data to read. */
 
-        f = info.frames;
-        sr = info.samplerate;
-        c = info.channels;
-        //printf("frames=%d\n",f);
-        //printf("samplerate=%d\n",sr);
-        //printf("channels=%d\n",c);
-        num_items = f*c;
-        //printf("num_items=%d\n",num_items);
-
-        /* Allocate space for the data to be read, then read it. */
-        buf = (float *) malloc(num_items*sizeof(float));
-        num = sf_read_float(sf,buf,num_items);
-        sf_close(sf);
+        
         //printf("Read %d items\n",num);
-        int x;
-        for(x = 0; x<length;x++) {
-            all_files[counter*length+x] = buf[x];
-            if(x<0)
-            {
-                printf("%s","PRINT SHIT!!!!");
-            }
+        
             
             //printf("%ld\n",(long int) counter*length);
             
