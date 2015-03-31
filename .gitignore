@@ -4,5 +4,5 @@
 *.out
 *.md.swp
 *.md.swo
-output/**
+oautput/**
 *.DS_Store

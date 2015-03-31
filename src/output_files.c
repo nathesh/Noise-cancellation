@@ -47,11 +47,11 @@ float* output_file()
                 f = info.frames;
                 sr = info.samplerate;
                 c = info.channels;
-                //printf("frames=%d\n",f);
-                //printf("samplerate=%d\n",sr);
-                //printf("channels=%d\n",c);
+                printf("frames=%d\n",f);
+                printf("samplerate=%d\n",sr);
+                printf("channels=%d\n",c);
                 num_items = f*c;
-                //printf("num_items=%d\n",num_items);
+                printf("num_items=%d\n",num_items);
 
                 /* Allocate space for the data to be read, then read it. */
                 buf = (float *) malloc(num_items*sizeof(float));

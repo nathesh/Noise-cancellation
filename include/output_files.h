@@ -6,7 +6,7 @@
 #include <sys/stat.h>
 #include <unistd.h> 
 #include <string.h>
-#define LENGTH (1638286)
+#define LENGTH (819144)
 //#define _GNU_SOURCE
 float* output_file();
 void output_audio();
