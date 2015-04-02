@@ -12,8 +12,8 @@ float* output_file()
     DIR * target;
     struct stat myfile;
     char* path_name; 
-    path_name = "../data/Ideal_Noise/wav_files/";
-    target = opendir("../data/Ideal_Noise/wav_files/");
+    path_name = "data/Ideal_Noise/wav_files/";
+    target = opendir("data/Ideal_Noise/wav_files/");
     /* Open the WAV file. */
     char buff[128];
     long int length;
@@ -60,14 +60,17 @@ float* output_file()
                 int x;
                 for(x = 0; x<length;x++) {
                     all_files[counter*length+x] = buf[x];
+                    //printf("%4.10f, %d\n",all_files[counter*length+x],22);
                     if(x<0)
                     {
                         printf("%s","PRINT SHIT!!!!");
                     }
                 }
+
                 counter +=1;
             }
         free(namelist[files_counter]);
+        //free(buff);
         //printf("%s\n","PRINT SHIT!!!!");
         files_counter +=1;
         }
