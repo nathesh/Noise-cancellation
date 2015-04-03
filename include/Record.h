@@ -15,5 +15,5 @@ typedef float SAMPLE;
 extern float* output_files;
 extern float* output_sound;
 extern float* test;
-extern int test_counter;
+extern int test_code;
 SAMPLE* Record(void); 

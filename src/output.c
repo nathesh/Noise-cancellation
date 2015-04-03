@@ -13,14 +13,14 @@ void output(float* bands) {
   {
     for(x=0;x<LENGTH;x++) {
       output_files[LENGTH*y+x] *= 1;//bands[y];
-      output_sound[x] += output_files[LENGTH*y+x]/10; 
+      output_sound[x] += output_files[LENGTH*y+x]; 
       //printf("%.15f\n",output_files[LENGTH*y+x]);
     }
     
   //printf("%s\n","DONE!");
   }
   //return output_sound
-  output_audio();
+  //output_audio();
 }
 void output_audio(){
   PaStreamParameters outputParameters;
